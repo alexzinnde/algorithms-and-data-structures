@@ -1,4 +1,5 @@
 /* eslint-disable func-names */
+// requires underbar
 const Stack = function () {
   const thing = {};
   thing.storage = {};
