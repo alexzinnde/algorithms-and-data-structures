@@ -13,10 +13,9 @@ describe('quicksort', () => {
       const number = Math.floor(Math.random() * n);
       input.push(number);
     }
-    const sorted = input.sort((a, b) => a - b); // sort numerically, not lexicographically
+    const sorted = input.sort((a, b) => a - b);
     const result = quicksort(input);
 
-    // using .eql can cause an n-line error message to print, so we do it by hand
     for (let i = 0; i < n; i += 1) {
       expect(result[i]).toEqual(sorted[i]);
     }
