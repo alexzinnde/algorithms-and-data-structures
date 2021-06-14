@@ -2,18 +2,11 @@ const quicksort = (array) => {
   if (array.length <= 1) {
     return array;
   }
-  const pivot = array[Math.floor(Math.random() * array.length)];
-  const less = quicksort(array.slice().filter((x) => x < pivot));
-  const greater = quicksort(array.slice().filter((x) => x > pivot));
+  const pivot = array[0];
+  const less = quicksort(array.slice(1).filter((x) => x <= pivot));
+  const greater = quicksort(array.slice(1).filter((x) => x > pivot));
 
-  return less.concat(pivot, greater);
+  return [].concat(less, pivot, greater);
 };
 
 module.exports = quicksort;
-
-// function test() {
-//   const result = quicksort([4, 3, 1, 2, 3]);
-//   console.log(result);
-// }
-
-// test();
