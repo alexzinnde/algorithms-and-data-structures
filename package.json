@@ -19,7 +19,8 @@
   "homepage": "https://github.com/alexzinnde/algorithms-and-data-structures#readme",
   "dependencies": {
     "eslint-plugin-jest": "^24.3.6",
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "underscore": "^1.13.1"
   },
   "devDependencies": {
     "eslint": "^7.28.0",

@@ -26,7 +26,6 @@ const LinkedList = function LinkedList() {
     list.tail = node;
   };
 
-
   // Time Complexity: O(1)
   list.removeHead = () => {
     const oldHead = list.head;
