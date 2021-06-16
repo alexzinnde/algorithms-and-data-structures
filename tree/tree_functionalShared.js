@@ -1,11 +1,15 @@
-const _ = require('underscore');
+const extend = function extend(to, from) {
+  Object.keys(from).forEach((key) => {
+    to[key] = from[key];
+  });
+};
 
 const Tree = function Tree(value) {
   const newTree = {};
   newTree.value = value;
 
   newTree.children = [];
-  _.extend(newTree, treeMethods);
+  extend(newTree, treeMethods);
 
   return newTree;
 };
@@ -25,4 +29,3 @@ treeMethods.contains = function contains(target) {
   }
   return this.children.reduce((memo, tree) => memo || tree.contains(target), false);
 };
-
