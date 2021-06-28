@@ -40,6 +40,19 @@ function buildOneTwoThree() {
   return push(node, 1);
 }
 
+// Implement Length() to count the number of nodes in a linked list.
+
+function length(head) {
+  return head ? 1 + length(head.next) : 0;
+}
+
+// Implement Count() to count the occurrences of an integer in a linked list.
+
+function count(head, data) {
+  if (!head) return 0;
+  return (head.data === data ? 1 : 0) + count(head.next, data);
+}
+
 // ======================= TESTS =========================
 function test() {
   function assertEqual(actual, expected, testName) {
@@ -49,14 +62,37 @@ function test() {
       console.log(`FAILED: [${testName}],  expected "${expected}" but got "${actual}"`);
     }
   }
+
+  console.log('================== Push() ========================');
   const head = push(null, 1);
   assertEqual(head.data, 1, 'should return a node when no linked list given');
   assertEqual(head.next, null, 'should return a sinlge node when no linked list given');
 
+  console.log('================== buildOneTwoThree() ========================');
   const oneTwoThree = buildOneTwoThree();
   assertEqual(oneTwoThree.data, 1, 'should return a linked list with the first element having a value of 1');
   assertEqual(oneTwoThree.next.data, 2, 'should return a linked list with the second element having a value of 2');
 
+  console.log('================== length() ========================');
+  assertEqual(length(oneTwoThree), 3, ' should return the length of a given linked list');
+
+  console.log('================== count() ========================');
+  let list = push(null, 1);
+  list = push(list, 2);
+  list = push(list, 2);
+  list = push(list, 3);
+  list = push(list, 3);
+  list = push(list, 3);
+  list = push(list, 3);
+  list = push(list, 5);
+  list = push(list, 5);
+  list = push(list, 0);
+
+  assertEqual(count(list, 1), 1, 'should return 1 when 1 node contains the target data');
+  assertEqual(count(list, 2), 2, 'should return 2 when 2 nodes contains the target data');
+  assertEqual(count(list, 3), 4, 'should return 4 when 4 nodes contains the target data');
+  assertEqual(count(list, 5), 2, 'should return 2 when 2 nodes contains the target data');
+  assertEqual(count(list, 10), 0, 'should return 0 when 0 nodes contains the target data');
 }
 
 test();
