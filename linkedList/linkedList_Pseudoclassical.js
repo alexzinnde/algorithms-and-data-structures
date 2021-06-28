@@ -53,6 +53,25 @@ function count(head, data) {
   return (head.data === data ? 1 : 0) + count(head.next, data);
 }
 
+/**
+ * Implement a GetNth() function that takes a linked list and an integer
+ * index and returns the node stored at the Nth index position.
+ * GetNth() uses the C numbering convention that the first node is index 0,
+ * the second is index 1, ... and so on.
+ * So for the list 42 -> 13 -> 666, GetNth() with index 1 should return Node(13);
+ *
+ * The index should be in the range [0..length-1].
+ * If it is not, GetNth() should throw/raise an exception
+ * You should also raise an exception if the list is empty/null/None.
+ */
+
+function getNth(node, index) {
+  if (!node) throw new Error();
+  if (index === 0) return node;
+  return getNth(node.next, index - 1);
+}
+
+
 // ======================= TESTS =========================
 function test() {
   function assertEqual(actual, expected, testName) {
@@ -93,6 +112,10 @@ function test() {
   assertEqual(count(list, 3), 4, 'should return 4 when 4 nodes contains the target data');
   assertEqual(count(list, 5), 2, 'should return 2 when 2 nodes contains the target data');
   assertEqual(count(list, 10), 0, 'should return 0 when 0 nodes contains the target data');
+
+  console.log('================== getNth() ========================');
+
+  assertEqual(getNth(oneTwoThree, 0).data, 1, 'should return the node at the 0th index')
 }
 
 test();
