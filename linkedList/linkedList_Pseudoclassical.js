@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jest/expect-expect */
 /* eslint-disable jest/no-disabled-tests */
 /* eslint-disable no-console */
@@ -5,6 +6,18 @@ function Node(data) {
   this.data = data;
   this.next = null;
 }
+
+function buildList(arr) {
+  const head = new Node(arr.shift());
+  let node = head;
+
+  while (arr.length) {
+    node.next = new Node(arr.shift());
+    node = node.next;
+  }
+  return head;
+}
+
 
 /**
  * Write push() and buildOneTwoThree()
@@ -71,6 +84,37 @@ function getNth(node, index) {
   return getNth(node.next, index - 1);
 }
 
+function insertNth(head, index, data) {
+  // TODO: RECURSIVELY
+}
+
+// Write an Append() function which appends one linked list to another.
+// The head of the resulting list should be returned.
+
+function append(listA, listB) {
+  if (!listA) return listB;
+  listA.next = append(listA.next, listB);
+  return listA;
+}
+
+/**
+ * Write a RemoveDuplicates() function which takes a list sorted in increasing order
+ * and deletes any duplicate nodes from the list. Ideally, the list should only be
+ * traversed once. The head of the resulting list should be returned.
+ */
+
+function removeDuplicates(head) {
+  if (!head) return null;
+  if (!head.next) return head;
+
+  if (head.data === head.next.data) {
+    head.next = removeDuplicates(head.next.next);
+  } else {
+    head.next = removeDuplicates(head.next);
+  }
+
+  return head;
+}
 
 // ======================= TESTS =========================
 function test() {
@@ -80,6 +124,21 @@ function test() {
     } else {
       console.log(`FAILED: [${testName}],  expected "${expected}" but got "${actual}"`);
     }
+  }
+
+  function assertLinkedListEqual(listA, listB) {
+    if (!listA && !listB) {
+      console.log('passed');
+      return;
+    }
+
+    if (listA.data !== listB.data) {
+      console.log(`Failed! A.data: ${listA.data}
+        B.data: ${listB.data}`);
+      return;
+    }
+
+    assertLinkedListEqual(listA.next, listB.next);
   }
 
   console.log('================== Push() ========================');
@@ -114,8 +173,27 @@ function test() {
   assertEqual(count(list, 10), 0, 'should return 0 when 0 nodes contains the target data');
 
   console.log('================== getNth() ========================');
+  assertEqual(getNth(oneTwoThree, 0).data, 1, 'should return the node at the 0th index');
 
-  assertEqual(getNth(oneTwoThree, 0).data, 1, 'should return the node at the 0th index')
+  console.log('================== assertLinkedListEqual() ========================');
+  console.log('should Pass: ');
+  assertLinkedListEqual(oneTwoThree, oneTwoThree);
+
+  console.log('should Fail: ');
+  assertLinkedListEqual(oneTwoThree, list);
+
+  console.log('================== removeDuplicates() ========================');
+  const removeDupEqualLists = removeDuplicates(oneTwoThree);
+  assertLinkedListEqual(oneTwoThree, removeDupEqualLists);
+
+  const list1 = buildList([1, 2, 2]);
+  const list2 = buildList([1, 2]);
+
+  assertLinkedListEqual(removeDuplicates(list1), list2);
+
+  const list3 = buildList([1, 1, 1, 1, 2, 2, 2, 2]);
+  const list4 = buildList([1, 2]);
+  assertLinkedListEqual(removeDuplicates(list3), list4);
 }
 
 test();
